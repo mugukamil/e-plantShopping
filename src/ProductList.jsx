@@ -9,6 +9,7 @@ function ProductList({ onHomeClick }) {
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
+    console.log(addedToCart);
 
     const plantsArray = [
         {
@@ -323,7 +324,7 @@ function ProductList({ onHomeClick }) {
                 <div className="product-grid">
                     {plantsArray.map((plant, idx) => (
                         <>
-                            <h3>{plant.category}</h3>
+                            <h3 className="plant_heading">{plant.category}</h3>
                             <div className="product-list" key={idx}>
                                 {plant.plants.map((plant, idx) => (
                                     <div className="product-card" key={idx}>
@@ -337,7 +338,7 @@ function ProductList({ onHomeClick }) {
                                             <p>{plant.description}</p>
                                             <p className="product-price">{plant.cost}</p>
                                             <button
-                                                className="product-button"
+                                                className={`product-button ${addedToCart[plant.name] ? "added-to-cart" : ""}`}
                                                 onClick={() => handleAddToCart(plant)}
                                             >
                                                 Add to Cart
