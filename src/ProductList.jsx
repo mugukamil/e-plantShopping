@@ -7,7 +7,6 @@ import { addItem } from "./CartSlice";
 function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-    const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
     const CartItems = useSelector((state) => state.cart.items);
 
@@ -267,11 +266,6 @@ function ProductList({ onHomeClick }) {
 
     const handleAddToCart = (product) => {
         dispatch(addItem(product));
-
-        setAddedToCart((prevState) => ({
-            ...prevState,
-            [product.name]: true,
-        }));
     };
     return (
         <div>
@@ -344,8 +338,11 @@ function ProductList({ onHomeClick }) {
                                             <h3 className="product-title">{plant.name}</h3>
                                             <p>{plant.description}</p>
                                             <p className="product-price">{plant.cost}</p>
+                                            {console.log(
+                                                CartItems.find((c) => c.name === plant.name),
+                                            )}
                                             <button
-                                                className={`product-button ${addedToCart[plant.name] ? "added-to-cart" : ""}`}
+                                                className={`product-button ${CartItems.find((c) => c.name === plant.name) ? "added-to-cart" : ""}`}
                                                 onClick={() => handleAddToCart(plant)}
                                             >
                                                 Add to Cart
