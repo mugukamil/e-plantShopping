@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./ProductList.css";
 import CartItem from "./CartItem";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItem } from "./CartSlice";
 
 function ProductList({ onHomeClick }) {
@@ -9,7 +9,7 @@ function ProductList({ onHomeClick }) {
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
     const dispatch = useDispatch();
-    console.log(addedToCart);
+    const CartItems = useSelector((state) => state.cart.items);
 
     const plantsArray = [
         {
@@ -241,6 +241,10 @@ function ProductList({ onHomeClick }) {
         textDecoration: "none",
     };
 
+    const calculateTotalQuantity = () => {
+        return CartItems ? CartItems.reduce((total, item) => total + item.quantity, 0) : 0;
+    };
+
     const handleHomeClick = (e) => {
         e.preventDefault();
         onHomeClick();
@@ -303,6 +307,9 @@ function ProductList({ onHomeClick }) {
                                     width="68"
                                 >
                                     <rect width="156" height="156" fill="none"></rect>
+                                    <text x="100" y="156" fontSize="80px" fill="#faf9f9">
+                                        {calculateTotalQuantity()}
+                                    </text>
                                     <circle cx="80" cy="216" r="12"></circle>
                                     <circle cx="184" cy="216" r="12"></circle>
                                     <path
